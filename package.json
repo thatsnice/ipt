@@ -1,0 +1,30 @@
+{
+  "name": "ipt",
+  "version": "0.0.0",
+  "description": "IRL event info puller, transformer, publisher",
+  "main": "lib/index.coffee",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thatsnice/ipt.git"
+  },
+  "keywords": [],
+  "author": "Robert de Forest <robert@defore.st>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thatsnice/ipt/issues"
+  },
+  "homepage": "https://github.com/thatsnice/ipt#readme",
+  "dependencies": {
+    "node-html-parser": "^6.1.1"
+  },
+  "devDependencies": {
+    "coffeescript": "^2.7.0"
+  }
+}
