@@ -20,8 +20,7 @@ Object.assign module.exports,
     pendingBuffer = new Buffer
 
     stream
-      .on 'data', (receivedData) ->
-        pendingBuffer = Buffer.concat pendingBuffer, receivedData
-        pendingBuffer = transformer.extractEvents pendingBuffer, produceEvent
+      .on 'data', (receivedData) -> pendingBuffer = Buffer.concat pendingBuffer, receivedData
+      .on 'end',                 -> transformer.extractEvents documentData, produceEvent
 
 

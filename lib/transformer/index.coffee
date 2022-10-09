@@ -1,13 +1,13 @@
 
 
 Object.assign module.exports,
-  makeTransformer: (textStream, config) ->
+  makeTransformer: (transformerModule, config) ->
     transformerName = config.TRANSFORMER
 
     # XXX: do something to 'transformerName' to make sure it's a sub-directory of
     # here.
 
-    Transformer = require transformer
+    Transformer = (require transformerModule).transformer
 
     new Transformer config
 

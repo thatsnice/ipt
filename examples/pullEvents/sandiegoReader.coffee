@@ -1,18 +1,17 @@
 process = require 'node:process'
 
-{makeTransformer} = require '../../lib/transformer'
 {makeEventStream} = require '../../lib/fetcher'
+{makeTransformer} = require '../../lib/transformer'
 
 sandiegoReader =
   URL                : "https://www.sandiegoreader.com/events/"
   TRANSFORMER        : 'ipt/jsonEmeddedInHTML'
   TRANSFORMER_CONFIG :
     eventContainerTagQuery : '.event-item-single script'
-    parser                 : 'JSON'
-    transformation         : 'schema.org'
 
 try
-  transformer = makeTransformer TRANSFORMER, TRANSFORMER_CONFIG
+  transformer = makeTransformer sandiegoReader.TRANSFORMER,
+                                sandiegoReader.TRANSFORMER_CONFIG
 catch error
   console.log "Error creating transformer: " + error.message
   console.log {TRANSFORMER, TRANSFORMER_CONFIG}
@@ -25,5 +24,9 @@ catch error
   console.log {URL}
   process.exit 1
 
-eventStream.on 'data', (event) -> console.log event
+eventStream.on 'data', (event) ->
+  { startDate
+    name
+  } = event
+  console.log {startDate, name}
 
