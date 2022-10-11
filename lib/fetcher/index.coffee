@@ -16,11 +16,13 @@ Gien a URL and a transformer, produce events.
 
 Object.assign module.exports,
   makeEventStream: (url, transformer) ->
-    stream        = urlToStream url
-    pendingBuffer = new Buffer
+    fetch url
+      .then (response) ->
+        if response.ok
+          response.text()
+        else
+          # XXX: um...
+          throw new Error "something went wrong"
 
-    stream
-      .on 'data', (receivedData) -> pendingBuffer = Buffer.concat pendingBuffer, receivedData
-      .on 'end',                 -> transformer.extractEvents documentData, produceEvent
-
-
+      .then (body) ->
+        transformer body

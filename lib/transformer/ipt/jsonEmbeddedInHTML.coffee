@@ -4,13 +4,10 @@
 Object.assign module.exports,
   transformer:
     class JSONEmbeddedInHTML
-      extractEvents: (buffer, consumer) ->
-        text = buffer.toString()
+      extractEvents: (text, consumer) ->
         root = parse text
 
-        for node in root.querySelectorAll @config.eventContainerTagQuery
-          consumer JSON.parse node.innerText
-
-        return new Buffer
+        nodes = root.querySelectorAll @config.eventContainerTagQuery
+        nodes.map (node) -> JSON.parse node.innerText
 
   
