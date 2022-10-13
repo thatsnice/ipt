@@ -1,21 +1,26 @@
 ###
 
-# makeEventStream(stream, transformer)
+# fetch(url)
 
-Gien a URL and a transformer, produce events.
+Grab the content at a URL.
 
 ## Usage
 
-    makeEventStream url, transformer
-      .pipe eventConsumer
+    fetch url
+      .then doSomethingWithBody
 
+
+## Notes
+
+Some amongst you may notice that this module doesn't do anything other than
+make the built-in 'fetch' worse. The purpose of the module is to demonstrate
+the interface between the outside and the tools. Another fetcher might pull
+from a database, a local file, an IMAP server, etc.
 
 ###
 
-{urlToStream} = require '../urlToStream'
-
 Object.assign module.exports,
-  makeEventStream: (url, transformer) ->
+  fetch: (url) ->
     fetch url
       .then (response) ->
         if response.ok
