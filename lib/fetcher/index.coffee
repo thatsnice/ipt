@@ -23,11 +23,9 @@ Object.assign module.exports,
   fetch: (url) ->
     fetch url
       .then (response) ->
-        if response.ok
-          response.text()
-        else
+        if not response.ok
           # XXX: um...
-          throw new Error "something went wrong"
+          console.log response
+          throw new Error "could not fetch '#{url}': #{response.statusText} (#{response.status})"
 
-      .then (body) ->
-        transformer body
+        response.text()

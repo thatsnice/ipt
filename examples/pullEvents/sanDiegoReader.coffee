@@ -1,9 +1,9 @@
 process = require 'node:process'
 
-{makeEventStream} = require '../../lib/fetcher'
-{makeTransformer} = require '../../lib/transformer'
+{fetch}     = require '../../lib/fetcher'
+Transformer = require '../../lib/transformer'
 
-sandiegoReader =
+sanDiegoReader =
   URL               : "https://www.sandiegoreader.com/events/"
   transformerName   : 'ipt/jsonEmeddedInHTML'
   transformerConfig :
@@ -11,25 +11,26 @@ sandiegoReader =
 
 
 try
-  transformer = makeTransformer sandiegoReader
+  transformer = Transformer.make sanDiegoReader
 catch error
   console.log "Error creating transformer: " + error.message
-  console.log {TRANSFORMER, TRANSFORMER_CONFIG}
+  console.log sanDiegoReader
   process.exit 1
 
 
 try
-  eventExtractor = makeEventStream URL, transformer
+  eventTextPromise = fetch sanDiegoReader.URL
 catch error
   console.log "Error fetching events: " + error.message
-  console.log {URL}
+  console.log URL: sanDiegoReader.URL
   process.exit 1
 
-
-eventExtractor.then (events) ->
-  for event from events
-    { startDate
-      name
-    } = event
-    console.log {startDate, name}
+eventTextPromise
+  .then (text) ->
+    events = transformer.extractEvents text
+    for event from events
+      { startDate
+        name
+      } = event
+      console.log {startDate, name}
 
