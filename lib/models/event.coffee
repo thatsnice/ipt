@@ -1,0 +1,2 @@
+class Event
+  constructor: (@details) ->

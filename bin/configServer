@@ -1,0 +1,43 @@
+#!/usr/bin/env coffee
+
+db = {}
+
+config =
+  port: parseInt(process.env.PORT ? 3000)
+  persistor: (tableName, selectors, value) ->
+    table = db[tableName] ?= []
+
+    itemMatches = (item, selectors) ->
+      for name, value of selectors
+        if item[name] isnt value
+          return false
+
+      true
+
+    lookup = ->
+      for item in table when itemMatches item, selector
+        return item
+
+      undefined
+
+    deleteItem = ->
+      db[tableName] =
+        table.filter (item) ->
+          not itemMatches item, selectors
+
+    replace = ->
+      deleteItem()
+
+      if value not in [null, undefined]
+        table.push value  # XXX: depends on mutation of a reference
+
+      value
+
+    switch arguments.length
+      when 1 then table
+      when 2 then lookup()
+      else        replace()
+
+app = require '../app'
+
+app.listen config.port, -> console.log "server up at http://localhost:#{config.port}"

@@ -2,7 +2,7 @@
   "name": "ipt",
   "version": "0.0.0",
   "description": "IRL event info puller, transformer, publisher",
-  "main": "lib/index.coffee",
+  "main": "index.coffee",
   "directories": {
     "example": "examples",
     "lib": "lib"
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/thatsnice/ipt#readme",
   "dependencies": {
+    "express": "^4.18.2",
     "node-html-parser": "^6.1.1"
   },
   "devDependencies": {
